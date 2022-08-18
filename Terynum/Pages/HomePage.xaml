@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Terynum.ViewModels"
+             x:Class="Terynum.Pages.HomePage">
+
+    <ContentPage.BindingContext>
+        <vm:HomePageViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <StackLayout Margin="20" 
+                     Spacing="15"
+                     MaximumWidthRequest="350" 
+                     HorizontalOptions="Center">
+
+            <Label FontSize="Header" 
+                   HorizontalTextAlignment="Center"
+                   Text="Welcome to Terynum"/>
+
+            <Image Source="dotnet_bot.png"
+                   WidthRequest="250"
+                   HeightRequest="310"
+                   HorizontalOptions="Center" />
+
+            <Label FontSize="Subtitle" 
+                   HorizontalTextAlignment="Center"
+                   Text="The game where you try to find the mystery number"/>
+
+            <Button Text="PLAY" 
+                    FontSize="Large"
+                    Command="{Binding PlayGameCommand}"/>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>
