@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Terynum.Pages.ConfigNewGamePage"
+             xmlns:vm="clr-namespace:Terynum.ViewModels"
+             xmlns:cc="clr-namespace:Terynum.CustomControls"
+             Title="New Game">
+
+    <ContentPage.BindingContext>
+        <vm:ConfigNewGameViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid ColumnDefinitions="0.4*,0.6*"
+          RowDefinitions="*,0.2*"
+          Margin="10">
+
+        <Grid Grid.Column="0"
+              Grid.Row="0"
+              ColumnSpacing="10"
+              RowSpacing="10" 
+              ColumnDefinitions="*,0.4*"
+              RowDefinitions="60,60,60">
+
+            <Label Grid.Column="0"
+                   Grid.Row="0"
+                   Text="Max. iterations allowed" 
+                   VerticalTextAlignment="Center"
+                   FontSize="Medium"/>
+            <cc:IntNumericEntry Grid.Column="1"
+                                 Grid.Row="0"
+                                 Text="{Binding GameManager.Game.Options.MaxIterations}"
+                                 FontSize="Large"
+                                 Min="1"
+                                 Max="100"/>
+
+            <Label Grid.Column="0"
+                   Grid.Row="1"
+                   Text="Min. mystery number" 
+                   VerticalTextAlignment="Center"
+                   FontSize="Medium"/>
+            <cc:IntNumericEntry Grid.Column="1"
+                                 Grid.Row="1"
+                                 x:Name="MinNum"
+                                 Text="{Binding GameManager.Game.Options.MinNumber}"
+                                 FontSize="Large"
+                                 Min="0"
+                                 Max="{Binding Source={x:Reference MaxNum}, Path=Text}"/>
+
+            <Label Grid.Column="0"
+                   Grid.Row="2"
+                   Text="Max. mystery number" 
+                   VerticalTextAlignment="Center"
+                   FontSize="Medium"/>
+            <cc:IntNumericEntry Grid.Column="1"
+                                 Grid.Row="2"
+                                 x:Name="MaxNum"
+                                 Text="{Binding GameManager.Game.Options.MaxNumber}"
+                                 FontSize="Large"
+                                 Min="{Binding Source={x:Reference MinNum}, Path=Text}"
+                                 Max="1000000"/>
+        </Grid>
+        
+        <Grid Grid.Column="1"
+              Margin="10"
+              RowDefinitions="0.2*,Auto,*,0.2*"
+              RowSpacing="10">
+
+            <HorizontalStackLayout Grid.Row="0"
+                               Spacing="5">
+                <Button Text="Add Player"
+                    FontSize="Large"
+                    Command="{Binding AddPlayerCommand}"/>
+                <Button Text="Remove Player"
+                    FontSize="Large"
+                    Command="{Binding RemovePlayerCommand}"/>
+            </HorizontalStackLayout>
+
+            <Line Grid.Row="1" BackgroundColor="White"/>
+
+            <CollectionView Grid.Row="2" 
+                        ItemsSource="{Binding GamePlayers}"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedGamePlayer}"
+                        HorizontalOptions="Center">
+
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="12">
+                        <Label HorizontalOptions="Center" 
+                               Text="No players added to the game!" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="50,5,50,5">
+                            <HorizontalStackLayout Spacing="5" 
+                                               Margin="2" 
+                                               WidthRequest="200">
+
+                                <Label Text="{Binding PlayerNumber}"
+                                   VerticalOptions="Center"/>
+                                <Entry Text="{Binding Player.Name}"
+                                   HeightRequest="30"
+                                   WidthRequest="200"/>
+
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+           
+
+        </Grid>
+
+        <HorizontalStackLayout Grid.ColumnSpan="2"
+                               Grid.Row="1"
+                               HorizontalOptions="CenterAndExpand">
+            <Button Text="START GAME"
+                    FontSize="Large"
+                    IsVisible="{Binding ShowPlayButton}"
+                    WidthRequest="400"
+                    Command="{Binding PlayCommand}"/>
+        </HorizontalStackLayout>
+
+    </Grid>
+
+</ContentPage>

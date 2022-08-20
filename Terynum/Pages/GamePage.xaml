@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Terynum.Pages.GamePage"
+             xmlns:vm="clr-namespace:Terynum.ViewModels"
+             xmlns:cc="clr-namespace:Terynum.CustomControls"
+             Title="Playing Terynum">
+
+    <ContentPage.BindingContext>
+        <vm:GameViewModel/>
+    </ContentPage.BindingContext>
+    
+    <VerticalStackLayout>
+        <Label 
+            Text="Guess the mystery number!"
+            FontSize="Large"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <HorizontalStackLayout Spacing="5">
+            <Label Text="Move :" FontSize="Medium"/>
+            <Label Text="{Binding GameManager.CurrentIteration}" FontSize="Medium"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Spacing="5">
+            <Label Text="Player:" FontSize="Medium"/>
+            <Label Text="{Binding GameManager.CurrentPlayer.Player.Name}" FontSize="Medium"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Spacing="5">
+            <Label Text="Player guess:" FontSize="Medium"/>
+            <cc:IntNumericEntry x:Name="ChoiceNum"/>
+        </HorizontalStackLayout>
+
+        <Button Text="Submit choice" 
+                FontSize="Medium" 
+                Command="{Binding SubmitChoiceCommand}" 
+                CommandParameter="{Binding Source={Reference ChoiceNum}, Path=Text}"/>
+
+    </VerticalStackLayout>
+</ContentPage>

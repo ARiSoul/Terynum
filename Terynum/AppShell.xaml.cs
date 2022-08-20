@@ -8,6 +8,7 @@ public partial class AppShell : Shell
 	{
 		InitializeComponent();
 
-        Routing.RegisterRoute(nameof(SelectPlayersPage), typeof(SelectPlayersPage));
+        Routing.RegisterRoute(nameof(ConfigNewGamePage), typeof(ConfigNewGamePage));
+        Routing.RegisterRoute(nameof(GamePage), typeof(GamePage));
     }
 }

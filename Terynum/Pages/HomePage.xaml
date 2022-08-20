@@ -27,7 +27,7 @@
                    HorizontalTextAlignment="Center"
                    Text="The game where you try to find the mystery number"/>
 
-            <Button Text="PLAY" 
+            <Button Text="ENTER" 
                     FontSize="Large"
                     Command="{Binding PlayGameCommand}"/>
         </StackLayout>

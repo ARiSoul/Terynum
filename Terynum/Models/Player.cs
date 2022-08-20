@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Terynum.Models;
 
-internal partial class Player : BaseID
+public partial class Player : BaseID
 {
     public Player()
     {

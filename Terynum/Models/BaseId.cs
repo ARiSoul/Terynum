@@ -3,9 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Terynum.Models;
 
-internal partial class BaseID : ObservableValidator
+public partial class BaseID : ObservableValidator
 {
+    public BaseID()
+    {
+        ID = Guid.NewGuid();
+    }
+
     [ObservableProperty]
     [Key]
-    int _id;
+    Guid _iD;
 }

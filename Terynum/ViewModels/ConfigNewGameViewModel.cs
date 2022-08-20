@@ -3,19 +3,40 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terynum.Models;
+using Terynum.Pages;
+using Terynum.Services;
 
 namespace Terynum.ViewModels;
 
-internal partial class SelectPlayersViewModel : BaseViewModel
+public partial class ConfigNewGameViewModel : BaseViewModel
 {
-    public ObservableCollection<GamePlayer> GamePlayers { get; } = new();
+    public ObservableCollection<GamePlayer> GamePlayers { get; private set; }
+
+    [ObservableProperty]
+    GameManager _gameManager;
 
     [ObservableProperty]
     GamePlayer _selectedGamePlayer;
+
+    [ObservableProperty]
+    bool _showPlayButton;
+
+    public ConfigNewGameViewModel()
+    {
+        GameManager = new GameManager(new Game());
+        GamePlayers = new ObservableCollection<GamePlayer>(GameManager.Game.Players);
+        GamePlayers.CollectionChanged += GamePlayers_CollectionChanged;
+    }
+
+    private void GamePlayers_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        ShowPlayButton = GamePlayers.Any();
+    }
 
     [RelayCommand(AllowConcurrentExecutions = true)]
     async Task AddPlayerAsync()
@@ -39,7 +60,7 @@ internal partial class SelectPlayersViewModel : BaseViewModel
     }
 
     [RelayCommand(AllowConcurrentExecutions = true)]
-    async Task RemovePlayer()
+    async Task RemovePlayerAsync()
     {
         if (SelectedGamePlayer == null)
             await Shell.Current.DisplayAlert("Invalid player", $"No player selected to remove!", "OK");
@@ -55,5 +76,15 @@ internal partial class SelectPlayersViewModel : BaseViewModel
         }
     }
 
-    // TODO: add button to play (only visible when there are players)
+    [RelayCommand(AllowConcurrentExecutions = true)]
+    async Task PlayAsync()
+    {
+        GameManager.Game.Players = GamePlayers;
+        GameManager.StartGame();
+
+        await Shell.Current.GoToAsync(nameof(GamePage), true, new Dictionary<string, object>
+        {
+            { nameof(GameManager), GameManager }
+        });
+    }
 }

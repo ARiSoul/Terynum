@@ -3,15 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Terynum.Models;
 
-internal partial class GamePlayer : ObservableValidator
+public partial class GamePlayer : ObservableValidator
 {
     [ObservableProperty]
-    int _gameId;
+    Guid _gameId;
     [ForeignKey(nameof(GameId))]
     public Game Game { get; set; }
 
     [ObservableProperty]
-    int _playerId;
+    Guid _playerId;
     [ForeignKey(nameof(PlayerId))]
     public Player Player { get; set; }
 
