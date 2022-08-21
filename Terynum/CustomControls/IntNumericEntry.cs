@@ -16,6 +16,21 @@ public class IntNumericEntry : Entry
         set => SetValue(MinProperty, value);
     }
 
+    public IntNumericEntry()
+    {
+        Focused += IntNumericEntry_Focused;
+    }
+
+    private void IntNumericEntry_Focused(object sender, FocusEventArgs e)
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            await Task.Delay(10);
+            this.CursorPosition = 0;
+            this.SelectionLength = this.Text != null ? this.Text.Length : 0;
+        });
+    }
+
     protected override void OnTextChanged(string oldValue, string newValue)
     {
         base.OnTextChanged(oldValue, newValue);

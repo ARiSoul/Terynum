@@ -2,14 +2,14 @@
 
 namespace Terynum.Models;
 
-public partial class Game : BaseID
+public partial class Match : BaseID
 {
-    public Game()
+    public Match()
     {
-        Players = new List<GamePlayer>();
-        Iterations = new List<GameIteration>();
+        Players = new List<MatchPlayer>();
+        Iterations = new List<MatchIteration>();
         
-        Options = new GameOptions
+        Options = new MatchOptions
         {
             MinNumber = 0,
             MaxNumber = 100,
@@ -21,10 +21,10 @@ public partial class Game : BaseID
     int _mysteryNumber;
 
     [ObservableProperty]
-    int _winnerPlayerId;
+    Guid _winnerPlayerId;
 
     [ObservableProperty]
-    GameOptions _options;
+    MatchOptions _options;
 
     [ObservableProperty]
     DateTime _startedDate;
@@ -32,6 +32,6 @@ public partial class Game : BaseID
     [ObservableProperty]
     DateTime _finishedDate;
 
-    public virtual ICollection<GamePlayer> Players { get; set; }
-    public virtual ICollection<GameIteration> Iterations { get; set; }
+    public virtual ICollection<MatchPlayer> Players { get; set; }
+    public virtual ICollection<MatchIteration> Iterations { get; set; }
 }

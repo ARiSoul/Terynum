@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Terynum.Pages.ConfigNewGamePage"
+             x:Class="Terynum.Pages.ConfigNewMatchPage"
              xmlns:vm="clr-namespace:Terynum.ViewModels"
              xmlns:cc="clr-namespace:Terynum.CustomControls"
-             Title="New Game">
+             Title="New Match Options">
 
     <ContentPage.BindingContext>
-        <vm:ConfigNewGameViewModel/>
+        <vm:ConfigNewMatchViewModel/>
     </ContentPage.BindingContext>
 
     <Grid ColumnDefinitions="0.4*,0.6*"
@@ -30,7 +30,7 @@
                    FontSize="Medium"/>
             <cc:IntNumericEntry Grid.Column="1"
                                  Grid.Row="0"
-                                 Text="{Binding GameManager.Game.Options.MaxIterations}"
+                                 Text="{Binding MatchManager.Match.Options.MaxIterations}"
                                  FontSize="Large"
                                  Min="1"
                                  Max="100"/>
@@ -43,7 +43,7 @@
             <cc:IntNumericEntry Grid.Column="1"
                                  Grid.Row="1"
                                  x:Name="MinNum"
-                                 Text="{Binding GameManager.Game.Options.MinNumber}"
+                                 Text="{Binding MatchManager.Match.Options.MinNumber}"
                                  FontSize="Large"
                                  Min="0"
                                  Max="{Binding Source={x:Reference MaxNum}, Path=Text}"/>
@@ -56,7 +56,7 @@
             <cc:IntNumericEntry Grid.Column="1"
                                  Grid.Row="2"
                                  x:Name="MaxNum"
-                                 Text="{Binding GameManager.Game.Options.MaxNumber}"
+                                 Text="{Binding MatchManager.Match.Options.MaxNumber}"
                                  FontSize="Large"
                                  Min="{Binding Source={x:Reference MinNum}, Path=Text}"
                                  Max="1000000"/>
@@ -81,16 +81,16 @@
             <Line Grid.Row="1" BackgroundColor="White"/>
 
             <CollectionView Grid.Row="2" 
-                        ItemsSource="{Binding GamePlayers}"
+                        ItemsSource="{Binding MatchPlayers}"
                         SelectionMode="Single"
-                        SelectedItem="{Binding SelectedGamePlayer}"
+                        SelectedItem="{Binding SelectedMatchPlayer}"
                         HorizontalOptions="Center"
                         VerticalOptions="CenterAndExpand">
 
                 <CollectionView.EmptyView>
                     <StackLayout Padding="12">
                         <Label HorizontalOptions="Center" 
-                               Text="No players added to the game!" />
+                               Text="No players added to the match!" />
                     </StackLayout>
                 </CollectionView.EmptyView>
 
@@ -121,7 +121,7 @@
         <HorizontalStackLayout Grid.ColumnSpan="2"
                                Grid.Row="1"
                                HorizontalOptions="CenterAndExpand">
-            <Button Text="START GAME"
+            <Button Text="START MATCH"
                     FontSize="Large"
                     IsVisible="{Binding ShowPlayButton}"
                     WidthRequest="400"

@@ -2,7 +2,7 @@
 
 namespace Terynum.Models;
 
-public partial class GameOptions : ObservableValidator
+public partial class MatchOptions : ObservableValidator
 {
     [ObservableProperty]
     int _maxIterations;

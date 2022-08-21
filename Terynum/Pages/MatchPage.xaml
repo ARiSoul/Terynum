@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Terynum.Pages.GamePage"
+             x:Class="Terynum.Pages.MatchPage"
              xmlns:vm="clr-namespace:Terynum.ViewModels"
              xmlns:cc="clr-namespace:Terynum.CustomControls"
              Title="Playing Terynum">
 
     <ContentPage.BindingContext>
-        <vm:GameViewModel/>
+        <vm:MatchViewModel/>
     </ContentPage.BindingContext>
 
     <Shell.BackButtonBehavior>
@@ -22,6 +22,20 @@
                VerticalOptions="Center" 
                HorizontalOptions="Center" />
 
+        <HorizontalStackLayout Spacing="10"
+                               HorizontalOptions="CenterAndExpand">
+            <Label Text="Between"
+                   FontSize="Medium"/>
+            <Label Text="{Binding MatchManager.Match.Options.MinNumber}"
+                   FontSize="Medium"/>
+            <Label Text="and"
+                   FontSize="Medium"/>
+            <Label Text="{Binding MatchManager.Match.Options.MaxNumber}"
+                   FontSize="Medium"/>
+            <Label Text="included"
+                   FontSize="Medium"/>
+        </HorizontalStackLayout>
+
         <Grid ColumnDefinitions="*,*"
               RowDefinitions="*,*,*"
               HorizontalOptions="CenterAndExpand"
@@ -30,10 +44,10 @@
               RowSpacing="20">
 
                 <Label Grid.Column="0" Grid.Row="0" Text="Turn:" FontSize="Medium"/>
-                <Label Grid.Column="1" Grid.Row="0" Text="{Binding GameManager.CurrentIteration.Iteration}" FontSize="Medium"/>
+                <Label Grid.Column="1" Grid.Row="0" Text="{Binding MatchManager.CurrentIteration.Iteration}" FontSize="Medium"/>
 
                 <Label Grid.Column="0" Grid.Row="1" Text="Player:" FontSize="Medium"/>
-                <Label Grid.Column="1" Grid.Row="1" Text="{Binding GameManager.CurrentPlayer.Player.Name}" FontSize="Medium"/>
+                <Label Grid.Column="1" Grid.Row="1" Text="{Binding MatchManager.CurrentPlayer.Player.Name}" FontSize="Medium"/>
 
                 <Label Grid.Column="0"
                        Grid.Row="2"
@@ -43,10 +57,10 @@
                 <cc:IntNumericEntry Grid.Column="1"
                                     Grid.Row="2"
                                     x:Name="ChoiceNum"
-                                    Text="{Binding GameManager.CurrentChoice}"
+                                    Text="{Binding MatchManager.CurrentChoice}"
                                     FontSize="Medium"
-                                    Min="{Binding GameManager.Game.Options.MinNumber}"
-                                    Max="{Binding GameManager.Game.Options.MaxNumber}"/>
+                                    Min="{Binding MatchManager.Match.Options.MinNumber}"
+                                    Max="{Binding MatchManager.Match.Options.MaxNumber}"/>
         </Grid>
 
         <Button Text="Submit your choice" 

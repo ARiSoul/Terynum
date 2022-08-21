@@ -4,13 +4,13 @@ using Terynum.Services;
 
 namespace Terynum.ViewModels;
 
-[QueryProperty(nameof(GameManager), nameof(GameManager))]
-public partial class GameViewModel : BaseViewModel
+[QueryProperty(nameof(MatchManager), nameof(MatchManager))]
+public partial class MatchViewModel : BaseViewModel
 {
     [ObservableProperty]
-    GameManager _gameManager;
+    MatchManager _matchManager;
 
-    public GameViewModel()
+    public MatchViewModel()
     {
         
     }
@@ -18,6 +18,6 @@ public partial class GameViewModel : BaseViewModel
     [RelayCommand(AllowConcurrentExecutions = true)]
     async Task SubmitChoiceAsync()
     {        
-        await GameManager.AddPlayerChoice();
+        await MatchManager.AddPlayerChoice();
     }
 }

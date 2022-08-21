@@ -8,6 +8,6 @@ public partial class HomePageViewModel : BaseViewModel
     [RelayCommand(AllowConcurrentExecutions = true)]
     async Task PlayGameAsync()
     {
-        await Shell.Current.GoToAsync(nameof(ConfigNewGamePage));
+        await Shell.Current.GoToAsync(nameof(ConfigNewMatchPage));
     }
 }

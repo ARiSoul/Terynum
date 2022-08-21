@@ -3,17 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Terynum.Models;
 
-public partial class GameIterationPlayerChoice : ObservableValidator
+public partial class MatchIterationPlayerChoice : ObservableValidator
 {
     [ObservableProperty]
-    Guid _gameID;
-    [ForeignKey(nameof(GameID))]
-    public Game Game { get; set; }
+    Guid _MatchID;
+    [ForeignKey(nameof(MatchID))]
+    public Match Match { get; set; }
 
     [ObservableProperty]
-    Guid _gameIterationID;
-    [ForeignKey(nameof(GameIterationID))]
-    public GameIteration GameIteration { get; set; }
+    Guid _matchIterationID;
+    [ForeignKey(nameof(MatchIterationID))]
+    public MatchIteration MatchIteration { get; set; }
 
     [ObservableProperty]
     Guid _playerID;

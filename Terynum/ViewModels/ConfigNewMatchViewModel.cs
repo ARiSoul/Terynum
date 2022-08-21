@@ -13,51 +13,51 @@ using Terynum.Services;
 
 namespace Terynum.ViewModels;
 
-public partial class ConfigNewGameViewModel : BaseViewModel
+public partial class ConfigNewMatchViewModel : BaseViewModel
 {
-    public ObservableCollection<GamePlayer> GamePlayers { get; private set; }
+    public ObservableCollection<MatchPlayer> MatchPlayers { get; private set; }
 
     [ObservableProperty]
-    IGameManager _gameManager;
+    IMatchManager _matchManager;
 
     [ObservableProperty]
-    GamePlayer _selectedGamePlayer;
+    MatchPlayer _selectedMatchPlayer;
 
     [ObservableProperty]
     bool _showPlayButton;
 
-    public ConfigNewGameViewModel()
+    public ConfigNewMatchViewModel()
     {
-        GameManager = new GameManager();
-        GamePlayers = new ObservableCollection<GamePlayer>(GameManager.Game.Players);
-        GamePlayers.CollectionChanged += GamePlayers_CollectionChanged;
+        MatchManager = new MatchManager();
+        MatchPlayers = new ObservableCollection<MatchPlayer>(MatchManager.Match.Players);
+        MatchPlayers.CollectionChanged += MatchPlayers_CollectionChanged;
     }
 
-    private void GamePlayers_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    private void MatchPlayers_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
-        ShowPlayButton = GamePlayers.Any();
+        ShowPlayButton = MatchPlayers.Any();
     }
 
     [RelayCommand(AllowConcurrentExecutions = true)]
     async Task AddPlayerAsync()
     {
-        var player = await Shell.Current.DisplayPromptAsync("Add Player", "Enter name of new player to add", initialValue: $"Player {GamePlayers.Count + 1}");
+        var player = await Shell.Current.DisplayPromptAsync("Add Player", "Enter name of new player to add", initialValue: $"Player {MatchPlayers.Count + 1}");
 
         if (string.IsNullOrWhiteSpace(player))
             return;
 
-        if (GamePlayers.FirstOrDefault(p => p.Player.Name == player) == null)
+        if (MatchPlayers.FirstOrDefault(p => p.Player.Name == player) == null)
         {
             Guid playerID = Guid.NewGuid();
-            GamePlayers.Add(new GamePlayer
+            MatchPlayers.Add(new MatchPlayer
             {
-                PlayerNumber = GamePlayers.Count + 1,
+                PlayerNumber = MatchPlayers.Count + 1,
                 Player = new Player
                 {
                     ID = playerID,
                     Name = player
                 },
-                GameId = GameManager.Game.ID,
+                MatchId = MatchManager.Match.ID,
                 PlayerId = playerID
             });
         }
@@ -68,13 +68,13 @@ public partial class ConfigNewGameViewModel : BaseViewModel
     [RelayCommand(AllowConcurrentExecutions = true)]
     async Task RemovePlayerAsync()
     {
-        if (SelectedGamePlayer == null)
+        if (SelectedMatchPlayer == null)
             await Shell.Current.DisplayAlert("Invalid player", $"No player selected to remove!", "OK");
         else
         {
-            GamePlayers.Remove(SelectedGamePlayer);
+            MatchPlayers.Remove(SelectedMatchPlayer);
             int number = 1;
-            foreach (var player in GamePlayers)
+            foreach (var player in MatchPlayers)
             {
                 player.PlayerNumber = number;
                 number++;
@@ -85,11 +85,11 @@ public partial class ConfigNewGameViewModel : BaseViewModel
     [RelayCommand(AllowConcurrentExecutions = true)]
     async Task PlayAsync()
     {
-        await GameManager.StartGame(GamePlayers);
+        await MatchManager.StartMatch(MatchPlayers);
 
-        await Shell.Current.GoToAsync(nameof(GamePage), true, new Dictionary<string, object>
+        await Shell.Current.GoToAsync(nameof(MatchPage), true, new Dictionary<string, object>
         {
-            { nameof(GameManager), GameManager }
+            { nameof(MatchManager), MatchManager }
         });
     }
 }

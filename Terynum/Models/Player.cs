@@ -7,12 +7,12 @@ public partial class Player : BaseID
 {
     public Player()
     {
-        Games = new List<Game>();
+        Matches = new List<Match>();
     }
 
     [ObservableProperty]
     [StringLength(100)]
     string _name;
 
-    public virtual ICollection<Game> Games { get; set; }
+    public virtual ICollection<Match> Matches { get; set; }
 }

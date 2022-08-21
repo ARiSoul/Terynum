@@ -54,19 +54,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\MatchPage.xaml.cs">
+	    <DependentUpon>MatchPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\HomePage.xaml.cs">
 	    <DependentUpon>HomePage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Pages\ConfigNewGamePage.xaml.cs">
-	    <DependentUpon>ConfigNewGamePage.xaml</DependentUpon>
+	  <Compile Update="Pages\ConfigNewMatchPage.xaml.cs">
+	    <DependentUpon>ConfigNewMatchPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Pages\ConfigNewGamePage.xaml">
+	  <MauiXaml Update="Pages\ConfigNewMatchPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\GamePage.xaml">
+	  <MauiXaml Update="Pages\MatchPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

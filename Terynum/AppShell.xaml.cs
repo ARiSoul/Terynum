@@ -8,7 +8,7 @@ public partial class AppShell : Shell
 	{
 		InitializeComponent();
 
-        Routing.RegisterRoute(nameof(ConfigNewGamePage), typeof(ConfigNewGamePage));
-        Routing.RegisterRoute(nameof(GamePage), typeof(GamePage));
+        Routing.RegisterRoute(nameof(ConfigNewMatchPage), typeof(ConfigNewMatchPage));
+        Routing.RegisterRoute(nameof(MatchPage), typeof(MatchPage));
     }
 }
