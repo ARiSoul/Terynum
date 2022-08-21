@@ -9,33 +9,49 @@
     <ContentPage.BindingContext>
         <vm:GameViewModel/>
     </ContentPage.BindingContext>
-    
-    <VerticalStackLayout>
-        <Label 
-            Text="Guess the mystery number!"
-            FontSize="Large"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
 
-        <HorizontalStackLayout Spacing="5">
-            <Label Text="Move :" FontSize="Medium"/>
-            <Label Text="{Binding GameManager.CurrentIteration}" FontSize="Medium"/>
-        </HorizontalStackLayout>
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False"/>
+    </Shell.BackButtonBehavior>
 
-        <HorizontalStackLayout Spacing="5">
-            <Label Text="Player:" FontSize="Medium"/>
-            <Label Text="{Binding GameManager.CurrentPlayer.Player.Name}" FontSize="Medium"/>
-        </HorizontalStackLayout>
+    <VerticalStackLayout HorizontalOptions="CenterAndExpand"
+                         Spacing="15">
 
-        <HorizontalStackLayout Spacing="5">
-            <Label Text="Player guess:" FontSize="Medium"/>
-            <cc:IntNumericEntry x:Name="ChoiceNum"/>
-        </HorizontalStackLayout>
+        <Label Text="Guess the mystery number!"
+               FontSize="Large"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
 
-        <Button Text="Submit choice" 
+        <Grid ColumnDefinitions="*,*"
+              RowDefinitions="*,*,*"
+              HorizontalOptions="CenterAndExpand"
+              Margin="20"
+              ColumnSpacing="20"
+              RowSpacing="20">
+
+                <Label Grid.Column="0" Grid.Row="0" Text="Turn:" FontSize="Medium"/>
+                <Label Grid.Column="1" Grid.Row="0" Text="{Binding GameManager.CurrentIteration.Iteration}" FontSize="Medium"/>
+
+                <Label Grid.Column="0" Grid.Row="1" Text="Player:" FontSize="Medium"/>
+                <Label Grid.Column="1" Grid.Row="1" Text="{Binding GameManager.CurrentPlayer.Player.Name}" FontSize="Medium"/>
+
+                <Label Grid.Column="0"
+                       Grid.Row="2"
+                       Text="Player guess:" 
+                       FontSize="Medium"
+                       VerticalTextAlignment="Center"/>
+                <cc:IntNumericEntry Grid.Column="1"
+                                    Grid.Row="2"
+                                    x:Name="ChoiceNum"
+                                    Text="{Binding GameManager.CurrentChoice}"
+                                    FontSize="Medium"
+                                    Min="{Binding GameManager.Game.Options.MinNumber}"
+                                    Max="{Binding GameManager.Game.Options.MaxNumber}"/>
+        </Grid>
+
+        <Button Text="Submit your choice" 
                 FontSize="Medium" 
-                Command="{Binding SubmitChoiceCommand}" 
-                CommandParameter="{Binding Source={Reference ChoiceNum}, Path=Text}"/>
+                Command="{Binding SubmitChoiceCommand}"/>
 
     </VerticalStackLayout>
 </ContentPage>

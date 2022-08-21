@@ -22,5 +22,5 @@ public partial class GamePlayer : ObservableValidator
     int _iterations;
 
     [ObservableProperty]
-    int _lastIteration;
+    int _lastIterationChoice;
 }

@@ -10,17 +10,14 @@ public partial class GameViewModel : BaseViewModel
     [ObservableProperty]
     GameManager _gameManager;
 
-    [ObservableProperty]
-    int _iteration;
-
     public GameViewModel()
     {
         
     }
 
-    [RelayCommand]
-    async Task SubmitChoiceAsync(int number)
-    {
-        GameManager.AddPlayerChoice(number);
+    [RelayCommand(AllowConcurrentExecutions = true)]
+    async Task SubmitChoiceAsync()
+    {        
+        await GameManager.AddPlayerChoice();
     }
 }

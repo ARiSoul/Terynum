@@ -7,8 +7,10 @@ public interface IGameManager
     Game Game { get; }
     GameIteration CurrentIteration { get; }
     GamePlayer CurrentPlayer { get; }
-    void StartGame();
-    void EndGame();
-    void AddGameIteration();
-    void AddPlayerChoice(int choice);
+    Task StartGame(ICollection<GamePlayer> players);
+    Task EndGame();
+    Task AddGameIteration();
+    Task AddPlayerChoice();
+    void ResetGame();
+    Task SelectNextPlayer();
 }

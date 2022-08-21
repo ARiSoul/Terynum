@@ -18,7 +18,7 @@ public partial class ConfigNewGameViewModel : BaseViewModel
     public ObservableCollection<GamePlayer> GamePlayers { get; private set; }
 
     [ObservableProperty]
-    GameManager _gameManager;
+    IGameManager _gameManager;
 
     [ObservableProperty]
     GamePlayer _selectedGamePlayer;
@@ -28,7 +28,7 @@ public partial class ConfigNewGameViewModel : BaseViewModel
 
     public ConfigNewGameViewModel()
     {
-        GameManager = new GameManager(new Game());
+        GameManager = new GameManager();
         GamePlayers = new ObservableCollection<GamePlayer>(GameManager.Game.Players);
         GamePlayers.CollectionChanged += GamePlayers_CollectionChanged;
     }
@@ -47,14 +47,20 @@ public partial class ConfigNewGameViewModel : BaseViewModel
             return;
 
         if (GamePlayers.FirstOrDefault(p => p.Player.Name == player) == null)
+        {
+            Guid playerID = Guid.NewGuid();
             GamePlayers.Add(new GamePlayer
             {
                 PlayerNumber = GamePlayers.Count + 1,
                 Player = new Player
                 {
+                    ID = playerID,
                     Name = player
-                }
+                },
+                GameId = GameManager.Game.ID,
+                PlayerId = playerID
             });
+        }
         else
             await Shell.Current.DisplayAlert("Invalid player", $"Player '{player}' already added. Choose another name.", "OK");
     }
@@ -79,8 +85,7 @@ public partial class ConfigNewGameViewModel : BaseViewModel
     [RelayCommand(AllowConcurrentExecutions = true)]
     async Task PlayAsync()
     {
-        GameManager.Game.Players = GamePlayers;
-        GameManager.StartGame();
+        await GameManager.StartGame(GamePlayers);
 
         await Shell.Current.GoToAsync(nameof(GamePage), true, new Dictionary<string, object>
         {

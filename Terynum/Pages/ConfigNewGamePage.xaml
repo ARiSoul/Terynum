@@ -17,9 +17,11 @@
         <Grid Grid.Column="0"
               Grid.Row="0"
               ColumnSpacing="10"
-              RowSpacing="10" 
+              RowSpacing="20" 
               ColumnDefinitions="*,0.4*"
-              RowDefinitions="60,60,60">
+              RowDefinitions="60,60,60"
+              Margin="10"
+              VerticalOptions="CenterAndExpand">
 
             <Label Grid.Column="0"
                    Grid.Row="0"
@@ -63,10 +65,11 @@
         <Grid Grid.Column="1"
               Margin="10"
               RowDefinitions="0.2*,Auto,*,0.2*"
-              RowSpacing="10">
+              RowSpacing="15">
 
             <HorizontalStackLayout Grid.Row="0"
-                               Spacing="5">
+                                   Spacing="5"
+                                   HorizontalOptions="CenterAndExpand">
                 <Button Text="Add Player"
                     FontSize="Large"
                     Command="{Binding AddPlayerCommand}"/>
@@ -81,7 +84,8 @@
                         ItemsSource="{Binding GamePlayers}"
                         SelectionMode="Single"
                         SelectedItem="{Binding SelectedGamePlayer}"
-                        HorizontalOptions="Center">
+                        HorizontalOptions="Center"
+                        VerticalOptions="CenterAndExpand">
 
                 <CollectionView.EmptyView>
                     <StackLayout Padding="12">
