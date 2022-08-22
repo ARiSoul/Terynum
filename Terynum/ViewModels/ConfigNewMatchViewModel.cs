@@ -13,19 +13,37 @@ using Terynum.Services;
 
 namespace Terynum.ViewModels;
 
+/// <summary>
+/// The view model to use in <see cref="ConfigNewMatchPage"/>.
+/// </summary>
 public partial class ConfigNewMatchViewModel : BaseViewModel
 {
+    /// <summary>
+    /// A collection of players that will join the match.
+    /// </summary>
     public ObservableCollection<MatchPlayer> MatchPlayers { get; private set; }
 
+    /// <summary>
+    /// The match manager.
+    /// </summary>
     [ObservableProperty]
     IMatchManager _matchManager;
 
+    /// <summary>
+    /// The selected player to be able to remove.
+    /// </summary>
     [ObservableProperty]
     MatchPlayer _selectedMatchPlayer;
 
+    /// <summary>
+    /// A flag to hide and show the play button (start match) whether there are players or not.
+    /// </summary>
     [ObservableProperty]
     bool _showPlayButton;
 
+    /// <summary>
+    /// Creates a new instance of ConfigNewMatchViewModel.
+    /// </summary>
     public ConfigNewMatchViewModel()
     {
         MatchManager = new MatchManager();
@@ -33,11 +51,20 @@ public partial class ConfigNewMatchViewModel : BaseViewModel
         MatchPlayers.CollectionChanged += MatchPlayers_CollectionChanged;
     }
 
+    /// <summary>
+    /// Manages the <see cref="ShowPlayButton"/> flag.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void MatchPlayers_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         ShowPlayButton = MatchPlayers.Any();
     }
 
+    /// <summary>
+    /// Command to add players to the match.
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand(AllowConcurrentExecutions = true)]
     async Task AddPlayerAsync()
     {
@@ -65,6 +92,10 @@ public partial class ConfigNewMatchViewModel : BaseViewModel
             await Shell.Current.DisplayAlert("Invalid player", $"Player '{player}' already added. Choose another name.", "OK");
     }
 
+    /// <summary>
+    /// Command to remove a selected player.
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand(AllowConcurrentExecutions = true)]
     async Task RemovePlayerAsync()
     {
@@ -82,6 +113,10 @@ public partial class ConfigNewMatchViewModel : BaseViewModel
         }
     }
 
+    /// <summary>
+    /// Command to start the match.
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand(AllowConcurrentExecutions = true)]
     async Task PlayAsync()
     {

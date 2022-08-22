@@ -1,5 +1,8 @@
 ﻿namespace Terynum.CustomControls;
 
+/// <summary>
+/// A very simple Entry that allows only integers. .Net Maui doesn's have one out of the box. 
+/// </summary>
 public class IntNumericEntry : Entry
 {
     public static readonly BindableProperty MaxProperty = BindableProperty.Create(nameof(Max), typeof(int), typeof(IntNumericEntry), int.MaxValue);
@@ -21,6 +24,11 @@ public class IntNumericEntry : Entry
         Focused += IntNumericEntry_Focused;
     }
 
+    /// <summary>
+    /// Selects all text on focus.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void IntNumericEntry_Focused(object sender, FocusEventArgs e)
     {
         MainThread.BeginInvokeOnMainThread(async () =>
@@ -31,6 +39,11 @@ public class IntNumericEntry : Entry
         });
     }
 
+    /// <summary>
+    /// Manages user input to allow only integers and control max and min value.
+    /// </summary>
+    /// <param name="oldValue"></param>
+    /// <param name="newValue"></param>
     protected override void OnTextChanged(string oldValue, string newValue)
     {
         base.OnTextChanged(oldValue, newValue);

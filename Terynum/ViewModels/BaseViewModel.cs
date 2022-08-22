@@ -2,6 +2,9 @@
 
 namespace Terynum.ViewModels;
 
+/// <summary>
+/// A base view model that provides some common functionalities to the other view models.
+/// </summary>
 public partial class BaseViewModel : ObservableObject
 {
     [ObservableProperty]

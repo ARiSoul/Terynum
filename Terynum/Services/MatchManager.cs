@@ -3,34 +3,60 @@ using Terynum.Models;
 
 namespace Terynum.Services;
 
+/// <summary>
+/// Implementation of <see cref="IMatchManager"/>.
+/// </summary>
 public partial class MatchManager : ObservableValidator, IMatchManager
 {
+    /// <summary>
+    /// The match being managed.
+    /// </summary>
     [ObservableProperty]
     Match _match;
-
+    /// <summary>
+    /// The current iteration object.
+    /// </summary>
     [ObservableProperty]
     MatchIteration _currentIteration;
-
+    /// <summary>
+    /// The current player object.
+    /// </summary>
     [ObservableProperty]
     MatchPlayer _currentPlayer;
-
+    /// <summary>
+    /// The current choice value.
+    /// </summary>
     [ObservableProperty]
     int _currentChoice;
 
+    /// <summary>
+    /// A helper variable to manage the current iteration number.
+    /// </summary>
     private int _iterationNumber;
 
+    /// <summary>
+    /// Creates a new instance of MatchManager.
+    /// </summary>
     public MatchManager()
     {
         Match = new();
         ResetMatch();
     }
 
+    /// <summary>
+    /// Resets all values of the match.
+    /// </summary>
     public void ResetMatch()
     {
         Match.Iterations.Clear();
         _iterationNumber = 1;
     }
 
+    /// <summary>
+    /// Starts the match with the players received.
+    /// </summary>
+    /// <param name="players">The players of the match.</param>
+    /// <returns></returns>
     public async Task StartMatch(ICollection<MatchPlayer> players)
     {
         Match.Players = players;
@@ -41,6 +67,10 @@ public partial class MatchManager : ObservableValidator, IMatchManager
         CurrentChoice = Match.Options.MinNumber;
     }
 
+    /// <summary>
+    /// Selects the next player, if there's one.
+    /// </summary>
+    /// <returns></returns>
     public async Task SelectNextPlayer()
     {
         if (Match.Players.Count > CurrentPlayer.PlayerNumber)
@@ -52,6 +82,10 @@ public partial class MatchManager : ObservableValidator, IMatchManager
         }
     }
 
+    /// <summary>
+    /// Ends the match.
+    /// </summary>
+    /// <returns></returns>
     public async Task EndMatch()
     {
         await SetMatchWinner();
@@ -60,6 +94,10 @@ public partial class MatchManager : ObservableValidator, IMatchManager
         ResetMatch();
     }
 
+    /// <summary>
+    /// Sets the winner of the match.
+    /// </summary>
+    /// <returns></returns>
     public async Task SetMatchWinner()
     {
         // A player found the mystery number before game max iterations reached
@@ -90,6 +128,10 @@ public partial class MatchManager : ObservableValidator, IMatchManager
             await Shell.Current.DisplayAlert($"UPS {CurrentPlayer.Player.Name}... FAIL", $"The mystery number was {Match.MysteryNumber}!", "OK");
     }
 
+    /// <summary>
+    /// Adds an iteration to the match.
+    /// </summary>
+    /// <returns></returns>
     public async Task AddMatchIteration()
     {
         if (Match.Iterations.Count < Match.Options.MaxIterations)
@@ -104,9 +146,6 @@ public partial class MatchManager : ObservableValidator, IMatchManager
         }
         else
         {
-            // TODO: improve everything, add database management, allow see results and ranking, etc
-            // TODO: add comments
-
             await Shell.Current.DisplayAlert("GAME OVER", "Max iterations reached!", "OK");
             await EndMatch();
 
@@ -114,6 +153,10 @@ public partial class MatchManager : ObservableValidator, IMatchManager
         }
     }
 
+    /// <summary>
+    /// Adds the choice of the current player.
+    /// </summary>
+    /// <returns></returns>
     public async Task AddPlayerChoice()
     {
         // first add the player choice
